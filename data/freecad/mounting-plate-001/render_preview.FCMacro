@@ -1,0 +1,53 @@
+"""Render only the final solid in a separately launched FreeCAD GUI process."""
+import json
+import traceback
+from pathlib import Path
+import FreeCAD as App
+import FreeCADGui as Gui
+from PySide import QtCore, QtWidgets
+
+root = Path('.')
+status = root / 'render-result.json'
+
+
+def render():
+    try:
+        doc = App.openDocument(str(root / 'mounting-plate.FCStd'))
+        doc.recompute()
+        final = doc.getObject('Hole4')
+        for obj in doc.Objects:
+            if hasattr(obj, 'ViewObject'):
+                obj.ViewObject.Visibility = obj == final
+        final.ViewObject.ShapeColor = (0.76, 0.80, 0.87)
+        final.ViewObject.LineColor = (0.15, 0.18, 0.23)
+        final.ViewObject.DisplayMode = 'Flat Lines'
+        view = Gui.activeDocument().activeView()
+        view.setAnimationEnabled(False) if hasattr(view, 'setAnimationEnabled') else None
+        view.setCameraType('Orthographic')
+        view.viewAxonometric()
+        view.fitAll()
+        Gui.updateGui()
+        QtWidgets.QApplication.processEvents()
+        iso = root / 'preview-isometric.png'
+        view.saveImage(str(iso), 1200, 900, 'White')
+        view.viewTop()
+        view.fitAll()
+        Gui.updateGui()
+        QtWidgets.QApplication.processEvents()
+        top = root / 'preview-top.png'
+        view.saveImage(str(top), 1200, 900, 'White')
+        assert iso.is_file() and iso.stat().st_size > 0
+        assert top.is_file() and top.stat().st_size > 0
+        report = {'passed': True, 'renderer': 'FreeCADGui.activeView().saveImage',
+                  'visible_objects': [obj.Name for obj in doc.Objects if obj.ViewObject.Visibility],
+                  'images': [str(iso), str(top)], 'resolution': [1200, 900]}
+        status.write_text(json.dumps(report, indent=2)+'\n')
+        App.closeDocument(doc.Name)
+    except BaseException:
+        status.write_text(json.dumps({'passed': False, 'error': traceback.format_exc()}, indent=2))
+    finally:
+        # This macro runs in its own process, never in a user's existing session.
+        QtCore.QTimer.singleShot(100, QtWidgets.QApplication.instance().quit)
+
+
+QtCore.QTimer.singleShot(1500, render)

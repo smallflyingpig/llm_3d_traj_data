@@ -1,0 +1,80 @@
+{
+  "sample_id": "freecad-mounting-plate-001",
+  "files": [
+    {
+      "path": "accept_geometry.py",
+      "bytes": 3356,
+      "sha256": "56d82e89ab48fffa0708c62b14f84c7fbcc56b20e14345c0ba54e9b8671c0188"
+    },
+    {
+      "path": "build-trajectory.json",
+      "bytes": 25679,
+      "sha256": "9d1e9e9db6d41904108ce94ca1b8d53528bd7eba47ab751425e6b1962f8990fe"
+    },
+    {
+      "path": "demo_plate.py",
+      "bytes": 2381,
+      "sha256": "9aa1f80acff48cfb70660c77ef1fdda72319563d02c25a9cab19fcb06d312e6e"
+    },
+    {
+      "path": "geometry-acceptance.json",
+      "bytes": 2969,
+      "sha256": "092ddd0b2ebb34c1c3846263472daf1f6e7515560c4b8a98add8a963ead74f97"
+    },
+    {
+      "path": "mounting-plate.FCStd",
+      "bytes": 13036,
+      "sha256": "d9de63e65ac33a9ffdc1877564eb35f4b4567effdc53e05c7b413a2d54b631be"
+    },
+    {
+      "path": "mounting-plate.step",
+      "bytes": 12627,
+      "sha256": "183ba1b61fbc9f3642639cf4b40090bf2d755f4773ca76c60c583fef0a0a0e09"
+    },
+    {
+      "path": "mounting-plate.stl",
+      "bytes": 102284,
+      "sha256": "8c887b4663d90259de7eb8cebe719d4dde687490e2064d80c930ffa11ca4449c"
+    },
+    {
+      "path": "preview-isometric.png",
+      "bytes": 13099,
+      "sha256": "45b55d33ba4d15924b1e54cb493b57bcc31f06cd92c00cd6483076cb2f885a84"
+    },
+    {
+      "path": "preview-top.png",
+      "bytes": 7001,
+      "sha256": "3cbee5a09eab4063f139a3e2719757a344fe1edc6a9d3b547345257bc628d521"
+    },
+    {
+      "path": "render-result.json",
+      "bytes": 227,
+      "sha256": "26c5a7c1413234938fd2872d2bb68d7be949f194fc1ca73088c2c1b7cf8fa1c4"
+    },
+    {
+      "path": "render_preview.FCMacro",
+      "bytes": 2147,
+      "sha256": "602089bd42e354e0059e51a0f50322882b0bdaeb75342d06e218641d1dec8783"
+    },
+    {
+      "path": "run_freecad.py",
+      "bytes": 3541,
+      "sha256": "86badfce232165df55879d7b01a267df4f9543b5c986dfa3a58e063a6d7d9407"
+    },
+    {
+      "path": "run_preview.py",
+      "bytes": 1289,
+      "sha256": "8bbdea5e0a6dea6a38478de0a0a0e75ce05b17715f7b801d830b43341e03c9c0"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 677,
+      "sha256": "73234b2eec0b811c9993298d3ba7bb96eb0cfa798943f3b97ebbcf13e4f5acb2"
+    },
+    {
+      "path": "visual-acceptance.json",
+      "bytes": 1366,
+      "sha256": "200935d6a601c731b7fa03a526029b2f34b55fed08305f7e15aa4ecbb4db5f19"
+    }
+  ]
+}

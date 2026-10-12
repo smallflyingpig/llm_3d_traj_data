@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "renderer": "FreeCADGui.activeView().saveImage",
+  "visible_objects": [
+    "Hole4"
+  ],
+  "images": [
+    "./preview-isometric.png",
+    "./preview-top.png"
+  ],
+  "resolution": [
+    1200,
+    900
+  ]
+}

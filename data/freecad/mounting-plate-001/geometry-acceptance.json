@@ -1,0 +1,144 @@
+{
+  "method": "Inspect final B-rep geometry independently of construction parameters",
+  "FCStd": {
+    "passed": true,
+    "dimensions_mm": [
+      80.0,
+      50.0,
+      5.0
+    ],
+    "solid_count": 1,
+    "hole_count": 4,
+    "holes": [
+      {
+        "center_xy_mm": [
+          10.0,
+          10.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      },
+      {
+        "center_xy_mm": [
+          10.0,
+          40.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      },
+      {
+        "center_xy_mm": [
+          70.0,
+          10.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      },
+      {
+        "center_xy_mm": [
+          70.0,
+          40.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      }
+    ],
+    "through_hole_check": "Full-height cylindrical walls plus empty-axis/material-neighborhood probes",
+    "tolerance_mm": 1e-06
+  },
+  "STEP": {
+    "passed": true,
+    "dimensions_mm": [
+      80.0,
+      50.0,
+      5.0
+    ],
+    "solid_count": 1,
+    "hole_count": 4,
+    "holes": [
+      {
+        "center_xy_mm": [
+          10.0,
+          10.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      },
+      {
+        "center_xy_mm": [
+          10.0,
+          40.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      },
+      {
+        "center_xy_mm": [
+          70.0,
+          10.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      },
+      {
+        "center_xy_mm": [
+          70.0,
+          40.0
+        ],
+        "radius_mm": 3.0,
+        "diameter_mm": 6.0,
+        "z_span_mm": [
+          0.0,
+          5.0
+        ],
+        "center_to_nearest_edge_mm": 10.0,
+        "wall_to_nearest_edge_mm": 7.0
+      }
+    ],
+    "through_hole_check": "Full-height cylindrical walls plus empty-axis/material-neighborhood probes",
+    "tolerance_mm": 1e-06
+  },
+  "passed": true
+}

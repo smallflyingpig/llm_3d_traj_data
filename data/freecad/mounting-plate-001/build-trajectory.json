@@ -1,0 +1,301 @@
+{
+  "id": "freecad-mounting-plate-001",
+  "visual_acceptance": {
+    "passed": true,
+    "method": "Assistant visually inspected both FreeCAD-rendered PNGs with view_image",
+    "checks": [
+      {
+        "item": "plate_outline",
+        "passed": true,
+        "observation": "俯视图显示完整矩形轮廓；轴测图显示平整顶面和板厚，无明显异常凸起或破损。"
+      },
+      {
+        "item": "four_holes",
+        "passed": true,
+        "observation": "俯视图可见四个大小一致的圆形开口，分别位于四角，左右和上下对称。"
+      },
+      {
+        "item": "display_visibility",
+        "passed": true,
+        "observation": "仅显示最终实体；未见圆柱刀具或中间实体遮挡，轴测图显示孔壁。"
+      },
+      {
+        "item": "framing",
+        "passed": true,
+        "observation": "两张图片中板体完整位于画面内，无裁切，轮廓和孔口清晰可见。"
+      }
+    ],
+    "limits": "视觉判断用于外观和显示状态；精确尺寸、孔径、孔位及通孔判定以独立几何验收为准。",
+    "images": [
+      {
+        "path": "./preview-isometric.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "45b55d33ba4d15924b1e54cb493b57bcc31f06cd92c00cd6483076cb2f885a84"
+      },
+      {
+        "path": "./preview-top.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "3cbee5a09eab4063f139a3e2719757a344fe1edc6a9d3b547345257bc628d521"
+      }
+    ],
+    "status": "passed",
+    "review_note": "本次修复已再次实际调用 view_image 查看两张原图；几何和截图执行结果来自此前实际执行记录。"
+  },
+  "acceptance_summary": {
+    "geometry": "passed",
+    "rendering": "passed",
+    "visual": "passed",
+    "visual_message_index": 17,
+    "index_base": 0
+  },
+  "provenance": {
+    "kind": "condensed_executed_trajectory",
+    "source_session_id": "01a124ec-f659-7bc0-a2b3-48d8f0978e25",
+    "source_file": "rollout-2026-10-10T16-27-51-01a124ec-f659-7bc0-a2b3-48d8f0978e25.jsonl",
+    "source_lines": {
+      "execution_call": 75,
+      "execution_result": 85,
+      "script_write_call": 68,
+      "script_write_result": 71,
+      "acceptance_script_write_call": 249,
+      "geometry_and_render_calls": 254,
+      "original_image_inspection": 266
+    },
+    "normalization": "任务按用户要求改写；原始批量 apply_patch 调用裁剪为仅写入 demo_plate.py 的补丁，完整保留脚本代码；functions.exec 包装中的实际操作规范化为 function tool_calls（apply_patch 的自由文本补丁放入 patch 字段）；写入返回值由原始成功结果 {} 规范化为 status 和 created_file；执行命令保留，执行返回仅保留退出状态和验证报告。省略安装探测、skill 创建、启动横幅及进度日志。此文件为整理后的训练轨迹，不是原始逐字日志。 补入之前真实执行的独立几何验收、GUI 渲染和图片查看；并行调用按几何→渲染展开。视觉结论在此次修复时再次实际查看原图核对。图片作为文件引用保留；未重新执行建模或渲染，不把历史执行冒充本次新执行。 GitHub 入库时将个人绝对路径规范化为样本目录相对路径，脚本与报告同步转换；命令须在样本目录执行。原始会话日志未上传，source_file 仅保留文件名用于追溯。",
+    "prerequisites": "已安装 FreeCAD 和本会话创建的 run_freecad.py 执行器；本机执行曾需要沙箱权限升级。",
+    "working_directory": "data/freecad/mounting-plate-001"
+  },
+  "messages": [
+    {
+      "role": "user",
+      "content": "使用FreeCAD创建一个80×50×5 mm 长方体，并在四个角各打一个3 mm的圆柱刀具孔，保留合理的间距"
+    },
+    {
+      "role": "assistant",
+      "content": "将 3 mm 按圆柱刀具半径解释（孔径 6 mm），孔中心距相邻边各 10 mm，孔边到板边的最小距离为 7 mm。以长方体为基体，依次减去四个贯穿厚度的圆柱，保留可编辑特征历史，保存并验证 FCStd、STEP 和 STL。 先写入 Python 建模脚本：创建 Part::Box 和四个 Part::Cylinder，依次用 Part::Cut 开孔，最后保存、导出并重新读取文件验证。",
+      "tool_calls": [
+        {
+          "id": "write_model_script",
+          "type": "function",
+          "function": {
+            "name": "apply_patch",
+            "arguments": "{\"patch\": \"*** Begin Patch\\n*** Add File: ./demo_plate.py\\n+\\\"\\\"\\\"FreeCAD job: editable 80x50x5 mm plate with four diameter-6 holes.\\\"\\\"\\\"\\n+import json\\n+import math\\n+from pathlib import Path\\n+import sys\\n+import FreeCAD as App\\n+import Part\\n+import Mesh\\n+\\n+out = Path(sys.argv[1]).resolve()\\n+out.mkdir(parents=True, exist_ok=True)\\n+paths = {ext: out / ('mounting-plate.' + ext) for ext in ('FCStd', 'step', 'stl')}\\n+if any(p.exists() for p in paths.values()):\\n+    raise FileExistsError('Demo outputs already exist; choose another output directory.')\\n+doc = App.newDocument('MountingPlate')\\n+plate = doc.addObject('Part::Box', 'Plate')\\n+plate.Length, plate.Width, plate.Height = 80, 50, 5\\n+last = plate\\n+for i, (x, y) in enumerate([(10, 10), (70, 10), (70, 40), (10, 40)], 1):\\n+    hole = doc.addObject('Part::Cylinder', 'HoleTool%d' % i)\\n+    hole.Radius, hole.Height = 3, 7\\n+    hole.Placement.Base = App.Vector(x, y, -1)\\n+    cut = doc.addObject('Part::Cut', 'Hole%d' % i)\\n+    cut.Base, cut.Tool = last, hole\\n+    last = cut\\n+doc.recompute()\\n+shape = last.Shape\\n+assert not shape.isNull() and shape.isValid() and len(shape.Solids) == 1\\n+expected = 80 * 50 * 5 - 4 * math.pi * 3**2 * 5\\n+assert abs(shape.Volume - expected) < 1e-6\\n+if App.GuiUp:\\n+    for obj in doc.Objects:\\n+        obj.ViewObject.Visibility = obj == last\\n+doc.saveAs(str(paths['FCStd']))\\n+Part.export([last], str(paths['step']))\\n+Mesh.export([last], str(paths['stl']))\\n+App.closeDocument(doc.Name)\\n+saved = App.openDocument(str(paths['FCStd']))\\n+saved.recompute()\\n+assert saved.getObject('Hole4').Shape.isValid()\\n+assert abs(saved.getObject('Hole4').Shape.Volume - expected) < 1e-6\\n+step_shape = Part.Shape()\\n+step_shape.read(str(paths['step']))\\n+assert step_shape.isValid() and len(step_shape.Solids) == 1\\n+assert abs(step_shape.Volume - expected) < 1e-4\\n+mesh = Mesh.Mesh(str(paths['stl']))\\n+assert mesh.CountFacets > 0 and mesh.isSolid()\\n+b = step_shape.BoundBox\\n+report = {'freecad_version': App.Version(), 'units': 'mm',\\n+          'dimensions': [b.XLength, b.YLength, b.ZLength],\\n+          'hole_diameter': 6, 'hole_centers': [[10,10],[70,10],[70,40],[10,40]],\\n+          'volume_mm3': step_shape.Volume, 'solid_count': len(step_shape.Solids),\\n+          'valid': True, 'stl_facets': mesh.CountFacets,\\n+          'files': {key: str(value) for key, value in paths.items()}}\\n+(out / 'validation.json').write_text(json.dumps(report, indent=2), encoding='utf-8')\\n+print(json.dumps(report, indent=2))\\n+App.closeDocument(saved.Name)\\n*** End Patch\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "write_model_script",
+      "name": "apply_patch",
+      "content": "{\"status\": \"success\", \"created_file\": \"./demo_plate.py\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "脚本已写入，使用 FreeCAD 自带命令行接口执行，检查模型保存、STEP 导出和 STL 闭合性。",
+      "tool_calls": [
+        {
+          "id": "build_plate",
+          "type": "function",
+          "function": {
+            "name": "exec_command",
+            "arguments": "{\"cmd\": \"python3 './run_freecad.py' './demo_plate.py' -- '.'\", \"sandbox_permissions\": \"require_escalated\", \"justification\": \"使用已安装的 FreeCAD 创建隔离示例，验证新 skill 的建模、FCStd 保存重读及 STEP/STL 导出；仅写入当前工作区示例目录。\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "build_plate",
+      "name": "exec_command",
+      "content": "{\"exit_code\": 0, \"validation\": {\"freecad_version\": [\"1\", \"1\", \"4\", \"20260928 (Git shallow)\", \"Unknown\", \"2026/09/28 13:46:34\", \"(HEAD detached at 4fd3bf320)\", \"4fd3bf320d9566a27e60069fc8387448aaa3a094\"], \"units\": \"mm\", \"dimensions\": [80.0, 50.0, 5.0], \"hole_diameter\": 6, \"hole_centers\": [[10, 10], [70, 10], [70, 40], [10, 40]], \"volume_mm3\": 19434.51332235384, \"solid_count\": 1, \"valid\": true, \"stl_facets\": 2044, \"files\": {\"FCStd\": \"./mounting-plate.FCStd\", \"step\": \"./mounting-plate.step\", \"stl\": \"./mounting-plate.stl\"}}}"
+    },
+    {
+      "role": "assistant",
+      "content": "已创建 80×50×5 mm 安装板，四个通孔半径 3 mm，孔中心为 (10,10)、(70,10)、(70,40)、(10,40) mm。模型为一个有效实体，体积 19434.51332235384 mm³；FCStd 重读、STEP 实体与体积检查、STL 闭合检查通过。已导出 FCStd、STEP、STL。"
+    },
+    {
+      "role": "user",
+      "content": "那你把尺寸、孔径和孔位的代码验收补上，再用 FreeCAD 脚本生成截图做视觉验收，把这些步骤和实际结果也补进那条轨迹数据里。"
+    },
+    {
+      "role": "assistant",
+      "stage": "acceptance_implementation",
+      "content": "编写独立几何验收代码、截图宏和 GUI 启动脚本。",
+      "tool_calls": [
+        {
+          "id": "write_acceptance_scripts",
+          "type": "function",
+          "function": {
+            "name": "apply_patch",
+            "arguments": "{\"patch\": \"*** Begin Patch\\n*** Add File: ./accept_geometry.py\\n+\\\"\\\"\\\"Independently inspect final FCStd and STEP geometry; do not read cutter parameters.\\\"\\\"\\\"\\n+import json\\n+from pathlib import Path\\n+import sys\\n+import FreeCAD as App\\n+import Part\\n+\\n+root = Path(sys.argv[1]).resolve()\\n+tolerance = 1e-6\\n+expected_centers = [(10.0, 10.0), (10.0, 40.0), (70.0, 10.0), (70.0, 40.0)]\\n+\\n+\\n+def inspect(shape):\\n+    assert not shape.isNull() and shape.isValid(), 'Invalid shape'\\n+    assert len(shape.Solids) == 1, 'Expected one solid'\\n+    b = shape.BoundBox\\n+    dimensions = [b.XLength, b.YLength, b.ZLength]\\n+    assert all(abs(a - e) < tolerance for a, e in zip(dimensions, [80, 50, 5])), dimensions\\n+    assert all(abs(v) < tolerance for v in [b.XMin, b.YMin, b.ZMin]), 'Unexpected origin'\\n+    holes = []\\n+    for face in shape.Faces:\\n+        surface = face.Surface\\n+        if not isinstance(surface, Part.Cylinder):\\n+            continue\\n+        axis = surface.Axis\\n+        assert abs(axis.x) < tolerance and abs(axis.y) < tolerance\\n+        assert abs(abs(axis.z) - 1) < tolerance, 'Hole axis is not perpendicular to plate'\\n+        center = (float(surface.Center.x), float(surface.Center.y))\\n+        radius = float(surface.Radius)\\n+        assert abs(radius - 3) < tolerance, ('Unexpected radius', radius)\\n+        # Each through-hole side wall must span the full plate thickness.\\n+        fb = face.BoundBox\\n+        assert abs(fb.ZMin) < tolerance and abs(fb.ZMax - 5) < tolerance\\n+        # Final solid must be empty at the axis through the entire thickness,\\n+        # with plate material present just outside the cylindrical wall.\\n+        for z in [0.001, 2.5, 4.999]:\\n+            assert not shape.isInside(App.Vector(center[0], center[1], z), tolerance, True)\\n+            for dx, dy in [(3.1, 0), (-3.1, 0), (0, 3.1), (0, -3.1)]:\\n+                assert shape.isInside(App.Vector(center[0] + dx, center[1] + dy, z), tolerance, True)\\n+        edge_distance = min(center[0], 80-center[0], center[1], 50-center[1])\\n+        assert abs(edge_distance - 10) < tolerance\\n+        holes.append({'center_xy_mm': list(center), 'radius_mm': radius,\\n+                      'diameter_mm': 2*radius, 'z_span_mm': [fb.ZMin, fb.ZMax],\\n+                      'center_to_nearest_edge_mm': edge_distance,\\n+                      'wall_to_nearest_edge_mm': edge_distance-radius})\\n+    assert len(holes) == 4, ('Expected four cylindrical hole walls', len(holes))\\n+    holes.sort(key=lambda h: tuple(h['center_xy_mm']))\\n+    for hole, expected in zip(holes, expected_centers):\\n+        assert all(abs(v-e) < tolerance for v, e in zip(hole['center_xy_mm'], expected)), hole\\n+    return {'passed': True, 'dimensions_mm': dimensions,\\n+            'solid_count': len(shape.Solids), 'hole_count': len(holes), 'holes': holes,\\n+            'through_hole_check': 'Full-height cylindrical walls plus empty-axis/material-neighborhood probes',\\n+            'tolerance_mm': tolerance}\\n+\\n+\\n+doc = App.openDocument(str(root / 'mounting-plate.FCStd'))\\n+doc.recompute()\\n+fcstd = inspect(doc.getObject('Hole4').Shape)\\n+step = Part.Shape()\\n+step.read(str(root / 'mounting-plate.step'))\\n+report = {'method': 'Inspect final B-rep geometry independently of construction parameters',\\n+          'FCStd': fcstd, 'STEP': inspect(step), 'passed': True}\\n+(root / 'geometry-acceptance.json').write_text(json.dumps(report, indent=2)+'\\\\n', encoding='utf-8')\\n+print(json.dumps(report, indent=2))\\n+App.closeDocument(doc.Name)\\n*** Add File: ./render_preview.FCMacro\\n+\\\"\\\"\\\"Render only the final solid in a separately launched FreeCAD GUI process.\\\"\\\"\\\"\\n+import json\\n+import traceback\\n+from pathlib import Path\\n+import FreeCAD as App\\n+import FreeCADGui as Gui\\n+from PySide import QtCore, QtWidgets\\n+\\n+root = Path('.')\\n+status = root / 'render-result.json'\\n+\\n+\\n+def render():\\n+    try:\\n+        doc = App.openDocument(str(root / 'mounting-plate.FCStd'))\\n+        doc.recompute()\\n+        final = doc.getObject('Hole4')\\n+        for obj in doc.Objects:\\n+            if hasattr(obj, 'ViewObject'):\\n+                obj.ViewObject.Visibility = obj == final\\n+        final.ViewObject.ShapeColor = (0.76, 0.80, 0.87)\\n+        final.ViewObject.LineColor = (0.15, 0.18, 0.23)\\n+        final.ViewObject.DisplayMode = 'Flat Lines'\\n+        view = Gui.activeDocument().activeView()\\n+        view.setAnimationEnabled(False) if hasattr(view, 'setAnimationEnabled') else None\\n+        view.setCameraType('Orthographic')\\n+        view.viewAxonometric()\\n+        view.fitAll()\\n+        Gui.updateGui()\\n+        QtWidgets.QApplication.processEvents()\\n+        iso = root / 'preview-isometric.png'\\n+        view.saveImage(str(iso), 1200, 900, 'White')\\n+        view.viewTop()\\n+        view.fitAll()\\n+        Gui.updateGui()\\n+        QtWidgets.QApplication.processEvents()\\n+        top = root / 'preview-top.png'\\n+        view.saveImage(str(top), 1200, 900, 'White')\\n+        assert iso.is_file() and iso.stat().st_size > 0\\n+        assert top.is_file() and top.stat().st_size > 0\\n+        report = {'passed': True, 'renderer': 'FreeCADGui.activeView().saveImage',\\n+                  'visible_objects': [obj.Name for obj in doc.Objects if obj.ViewObject.Visibility],\\n+                  'images': [str(iso), str(top)], 'resolution': [1200, 900]}\\n+        status.write_text(json.dumps(report, indent=2)+'\\\\n')\\n+        App.closeDocument(doc.Name)\\n+    except BaseException:\\n+        status.write_text(json.dumps({'passed': False, 'error': traceback.format_exc()}, indent=2))\\n+    finally:\\n+        # This macro runs in its own process, never in a user's existing session.\\n+        QtCore.QTimer.singleShot(100, QtWidgets.QApplication.instance().quit)\\n+\\n+\\n+QtCore.QTimer.singleShot(1500, render)\\n*** Add File: ./run_preview.py\\n+\\\"\\\"\\\"Launch a separate FreeCAD GUI instance with isolated configuration and clean env.\\\"\\\"\\\"\\n+import json\\n+import os\\n+from pathlib import Path\\n+import subprocess\\n+import tempfile\\n+\\n+root = Path(__file__).resolve().parent\\n+status = root / 'render-result.json'\\n+if status.exists():\\n+    raise FileExistsError('Render result already exists; review before another render.')\\n+env = {key: value for key, value in os.environ.items()\\n+       if key in {'HOME', 'PATH', 'TMPDIR', 'LANG', 'LC_ALL', 'USER', 'LOGNAME'}}\\n+with tempfile.TemporaryDirectory(prefix='freecad-preview-') as tmp:\\n+    proc = subprocess.run(\\n+        ['/Applications/FreeCAD.app/Contents/Resources/bin/freecad',\\n+         '-u', str(Path(tmp)/'user.cfg'), '-s', str(Path(tmp)/'system.cfg'),\\n+         str(root/'render_preview.FCMacro')],\\n+        env=env, stdin=subprocess.DEVNULL, capture_output=True, text=True,\\n+        errors='replace', timeout=90)\\n+    (root/'render.log').write_text(proc.stdout+'\\\\n'+proc.stderr)\\n+    if not status.exists():\\n+        raise RuntimeError('FreeCAD GUI did not produce render-result.json; inspect render.log')\\n+    report = json.loads(status.read_text())\\n+    print(json.dumps({'process_exit_code': proc.returncode, **report}, indent=2))\\n+    if not report['passed'] or proc.returncode != 0:\\n+        raise SystemExit(1)\\n*** End Patch\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "stage": "acceptance_implementation",
+      "tool_call_id": "write_acceptance_scripts",
+      "name": "apply_patch",
+      "content": "{\"status\": \"success\", \"created_files\": [\"./accept_geometry.py\", \"./render_preview.FCMacro\", \"./run_preview.py\"]}"
+    },
+    {
+      "role": "assistant",
+      "stage": "geometry_acceptance",
+      "content": "从最终 B-rep 独立检查尺寸、孔径、孔位及贯穿性。",
+      "tool_calls": [
+        {
+          "id": "verify_geometry",
+          "type": "function",
+          "function": {
+            "name": "exec_command",
+            "arguments": "{\"cmd\": \"python3 ./run_freecad.py './accept_geometry.py' -- '.'\", \"sandbox_permissions\": \"require_escalated\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "stage": "geometry_acceptance",
+      "tool_call_id": "verify_geometry",
+      "name": "exec_command",
+      "content": "{\"exit_code\": 0, \"report\": {\"method\": \"Inspect final B-rep geometry independently of construction parameters\", \"FCStd\": {\"passed\": true, \"dimensions_mm\": [80.0, 50.0, 5.0], \"solid_count\": 1, \"hole_count\": 4, \"holes\": [{\"center_xy_mm\": [10.0, 10.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}, {\"center_xy_mm\": [10.0, 40.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}, {\"center_xy_mm\": [70.0, 10.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}, {\"center_xy_mm\": [70.0, 40.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}], \"through_hole_check\": \"Full-height cylindrical walls plus empty-axis/material-neighborhood probes\", \"tolerance_mm\": 1e-06}, \"STEP\": {\"passed\": true, \"dimensions_mm\": [80.0, 50.0, 5.0], \"solid_count\": 1, \"hole_count\": 4, \"holes\": [{\"center_xy_mm\": [10.0, 10.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}, {\"center_xy_mm\": [10.0, 40.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}, {\"center_xy_mm\": [70.0, 10.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}, {\"center_xy_mm\": [70.0, 40.0], \"radius_mm\": 3.0, \"diameter_mm\": 6.0, \"z_span_mm\": [0.0, 5.0], \"center_to_nearest_edge_mm\": 10.0, \"wall_to_nearest_edge_mm\": 7.0}], \"through_hole_check\": \"Full-height cylindrical walls plus empty-axis/material-neighborhood probes\", \"tolerance_mm\": 1e-06}, \"passed\": true}}"
+    },
+    {
+      "role": "assistant",
+      "stage": "screenshot_generation",
+      "content": "用独立 FreeCAD GUI 进程执行截图宏，生成轴测图和俯视图。",
+      "tool_calls": [
+        {
+          "id": "render_freecad_views",
+          "type": "function",
+          "function": {
+            "name": "exec_command",
+            "arguments": "{\"cmd\": \"python3 './run_preview.py'\", \"sandbox_permissions\": \"require_escalated\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "stage": "screenshot_generation",
+      "tool_call_id": "render_freecad_views",
+      "name": "exec_command",
+      "content": "{\"process_exit_code\": 0, \"passed\": true, \"renderer\": \"FreeCADGui.activeView().saveImage\", \"visible_objects\": [\"Hole4\"], \"images\": [\"./preview-isometric.png\", \"./preview-top.png\"], \"resolution\": [1200, 900]}"
+    },
+    {
+      "role": "assistant",
+      "stage": "visual_inspection",
+      "content": "实际查看轴测图进行视觉验收。",
+      "tool_calls": [
+        {
+          "id": "view_isometric",
+          "type": "function",
+          "function": {
+            "name": "view_image",
+            "arguments": "{\"path\": \"./preview-isometric.png\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "stage": "visual_inspection",
+      "tool_call_id": "view_isometric",
+      "name": "view_image",
+      "content": "{\"image\": {\"path\": \"./preview-isometric.png\", \"width\": 1200, \"height\": 900, \"sha256\": \"45b55d33ba4d15924b1e54cb493b57bcc31f06cd92c00cd6483076cb2f885a84\"}, \"observation_type\": \"image\", \"note\": \"原工具返回图片；此精简轨迹通过 PNG 路径与 SHA256 引用实际图像，消费时需加载图片。\"}"
+    },
+    {
+      "role": "assistant",
+      "stage": "visual_inspection",
+      "content": "实际查看俯视图进行视觉验收。",
+      "tool_calls": [
+        {
+          "id": "view_top",
+          "type": "function",
+          "function": {
+            "name": "view_image",
+            "arguments": "{\"path\": \"./preview-top.png\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "stage": "visual_inspection",
+      "tool_call_id": "view_top",
+      "name": "view_image",
+      "content": "{\"image\": {\"path\": \"./preview-top.png\", \"width\": 1200, \"height\": 900, \"sha256\": \"3cbee5a09eab4063f139a3e2719757a344fe1edc6a9d3b547345257bc628d521\"}, \"observation_type\": \"image\", \"note\": \"原工具返回图片；此精简轨迹通过 PNG 路径与 SHA256 引用实际图像，消费时需加载图片。\"}"
+    },
+    {
+      "role": "assistant",
+      "stage": "visual_acceptance",
+      "content": "视觉验收通过：已实际查看两张图片，矩形板轮廓完整、四孔大小一致且布局对称，轴测图能看到板厚及孔壁；无刀具或中间实体遮挡，无裁切或白图。图片不用于精确测量，尺寸、孔径和孔位以代码几何验收为准。",
+      "visual_assessment": {
+        "passed": true,
+        "method": "Assistant visually inspected both FreeCAD-rendered PNGs with view_image",
+        "checks": [
+          {
+            "item": "plate_outline",
+            "passed": true,
+            "observation": "俯视图显示完整矩形轮廓；轴测图显示平整顶面和板厚，无明显异常凸起或破损。"
+          },
+          {
+            "item": "four_holes",
+            "passed": true,
+            "observation": "俯视图可见四个大小一致的圆形开口，分别位于四角，左右和上下对称。"
+          },
+          {
+            "item": "display_visibility",
+            "passed": true,
+            "observation": "仅显示最终实体；未见圆柱刀具或中间实体遮挡，轴测图显示孔壁。"
+          },
+          {
+            "item": "framing",
+            "passed": true,
+            "observation": "两张图片中板体完整位于画面内，无裁切，轮廓和孔口清晰可见。"
+          }
+        ],
+        "limits": "视觉判断用于外观和显示状态；精确尺寸、孔径、孔位及通孔判定以独立几何验收为准。",
+        "images": [
+          {
+            "path": "./preview-isometric.png",
+            "width": 1200,
+            "height": 900,
+            "sha256": "45b55d33ba4d15924b1e54cb493b57bcc31f06cd92c00cd6483076cb2f885a84"
+          },
+          {
+            "path": "./preview-top.png",
+            "width": 1200,
+            "height": 900,
+            "sha256": "3cbee5a09eab4063f139a3e2719757a344fe1edc6a9d3b547345257bc628d521"
+          }
+        ],
+        "status": "passed",
+        "review_note": "本次修复已再次实际调用 view_image 查看两张原图；几何和截图执行结果来自此前实际执行记录。"
+      }
+    },
+    {
+      "role": "assistant",
+      "stage": "delivery",
+      "content": "建模、代码验收及视觉验收完成。FCStd、STEP 的实测尺寸为 80×50×5 mm，四孔半径 3 mm（直径 6 mm），孔位正确、孔中心距相邻边 10 mm、孔壁距边 7 mm。截图生成、实际看图和逐项视觉判断均已纳入此轨迹。"
+    }
+  ],
+  "image_assets": [
+    {
+      "path": "./preview-isometric.png",
+      "width": 1200,
+      "height": 900,
+      "sha256": "45b55d33ba4d15924b1e54cb493b57bcc31f06cd92c00cd6483076cb2f885a84"
+    },
+    {
+      "path": "./preview-top.png",
+      "width": 1200,
+      "height": 900,
+      "sha256": "3cbee5a09eab4063f139a3e2719757a344fe1edc6a9d3b547345257bc628d521"
+    }
+  ]
+}
