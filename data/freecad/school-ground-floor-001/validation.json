@@ -1,0 +1,339 @@
+{
+  "scope": "首层详细建筑几何模型；非全楼/非结构计算模型",
+  "units": "mm",
+  "counts": {
+    "columns": 130,
+    "wall_segments_including_opening_hosts": 111,
+    "windows": 10,
+    "doors": 14,
+    "stair_flights": 8,
+    "ground_slabs": 5,
+    "upper_slabs": 4,
+    "spaces": 7,
+    "outdoor_terrace_tiers": 15,
+    "outdoor_paving": 3,
+    "central_platform": 1
+  },
+  "objects": 677,
+  "solid_count": 339,
+  "volume_mm3": 867893492084.6794,
+  "invalid_shapes": [],
+  "empty_shapes": [],
+  "solver_errors": [],
+  "unconstrained_sketches": [],
+  "column_footprint_errors": [],
+  "opening_checks": [
+    {
+      "opening": "Window",
+      "host": "Wall087",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window001",
+      "host": "Wall088",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window002",
+      "host": "Wall089",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window003",
+      "host": "Wall090",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window004",
+      "host": "Wall091",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window005",
+      "host": "Wall092",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window006",
+      "host": "Wall093",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window007",
+      "host": "Wall094",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window008",
+      "host": "Wall095",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window009",
+      "host": "Wall096",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window010",
+      "host": "Wall097",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window011",
+      "host": "Wall098",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window012",
+      "host": "Wall099",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window013",
+      "host": "Wall100",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window014",
+      "host": "Wall101",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window015",
+      "host": "Wall102",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window016",
+      "host": "Wall103",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window017",
+      "host": "Wall104",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window018",
+      "host": "Wall105",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window019",
+      "host": "Wall106",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window020",
+      "host": "Wall107",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window021",
+      "host": "Wall108",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window022",
+      "host": "Wall109",
+      "through_at_center": true
+    },
+    {
+      "opening": "Window023",
+      "host": "Wall110",
+      "through_at_center": true
+    }
+  ],
+  "parameter_edit_verified": true,
+  "step_roundtrip": {
+    "valid": true,
+    "solid_count": 339,
+    "relative_volume_error": 9.845588142935725e-15
+  },
+  "assumptions": {
+    "door_height": 2100,
+    "door_frame": 60,
+    "window_frame": 60,
+    "glass_thickness": 6,
+    "ground_slab_thickness": 150,
+    "stair_structure_thickness": 150,
+    "stair_half_height": 1950,
+    "stair_risers_per_flight": 13,
+    "upper_slab_outline": "AREA layer incomplete; registered and inferred pieces marked explicitly",
+    "outdoor_lower_area_level": -1600,
+    "structural_validation": "not performed",
+    "outdoor_terrace_rise": 320,
+    "outdoor_terrace_level": -1600,
+    "outdoor_paving_outline": "inferred from repeated frame bay; not approved area boundary",
+    "paving_column_base": "Columns outside ±0.000 slabs and inside inferred patios follow TerraceLevel; requires grading details"
+  },
+  "evidence": {
+    "floor_height": "32小学2-2剖面: ±0.000 and +3.900 markers 555FC/555F8",
+    "slab_thickness": "32小学2-2剖面: closed slab outlines 5539F/553E7/55557, height 100",
+    "window_height": "32小学2-2剖面: ground window lines 556AF onward, 1600 tall, bottom +900",
+    "ground_to_second_registration": {
+      "offset": [
+        293967.4584092051,
+        1785.2411128617823
+      ],
+      "matching_column_outline_votes": 114
+    },
+    "central_platform": "20小学首层 +0.600 label and exact source boundaries; entrance closure inferred"
+  },
+  "not_modelled": [
+    "上层建筑和完整地下室",
+    "配筋、基础与结构梁设计",
+    "机电系统",
+    "完整场地景观及栏杆细部"
+  ],
+  "limitations": [
+    "AREA 轮廓不完整，上方板与地板的部分边界推定；不用于面积报审",
+    "门洞净宽、门型、框截面需要详图核对",
+    "此为建筑几何重建，未做结构、消防或现行规范校验"
+  ],
+  "reopened_objects": 677,
+  "model_bbox": [
+    1092.2236,
+    785.2399999999998,
+    -1750.0,
+    90442.2236,
+    44235.0,
+    3800.0
+  ],
+  "view_validation": "Direct orthographic camera; plan, CAD overlay and isometric previews generated from native model",
+  "elevation_checks": [
+    {
+      "object": "Structure130",
+      "bottom": 3800.0,
+      "top": 3900.0,
+      "expected_bottom": 3800.0,
+      "expected_top": 3900.0
+    },
+    {
+      "object": "Structure133",
+      "bottom": 3800.0,
+      "top": 3900.0,
+      "expected_bottom": 3800.0,
+      "expected_top": 3900.0
+    },
+    {
+      "object": "Structure135",
+      "bottom": 3800.0,
+      "top": 3900.0,
+      "expected_bottom": 3800.0,
+      "expected_top": 3900.0
+    },
+    {
+      "object": "Structure137",
+      "bottom": 3800.0,
+      "top": 3900.0,
+      "expected_bottom": 3800.0,
+      "expected_top": 3900.0
+    },
+    {
+      "object": "Structure131",
+      "bottom": -150.0,
+      "top": 0.0,
+      "expected_bottom": -150.0,
+      "expected_top": 0.0
+    },
+    {
+      "object": "Structure132",
+      "bottom": -1750.0,
+      "top": -1600.0,
+      "expected_bottom": -1750.0,
+      "expected_top": -1600.0
+    },
+    {
+      "object": "Structure134",
+      "bottom": -150.0,
+      "top": 0.0,
+      "expected_bottom": -150.0,
+      "expected_top": 0.0
+    },
+    {
+      "object": "Structure136",
+      "bottom": -150.0,
+      "top": 0.0,
+      "expected_bottom": -150.0,
+      "expected_top": 0.0
+    },
+    {
+      "object": "Structure138",
+      "bottom": -150.0,
+      "top": 0.0,
+      "expected_bottom": -150.0,
+      "expected_top": 0.0
+    }
+  ],
+  "stair_level_checks": [
+    {
+      "object": "Stairs001",
+      "end_level": 1950.0,
+      "expected": 1950
+    },
+    {
+      "object": "Stairs002",
+      "end_level": 3900.0,
+      "expected": 3900
+    },
+    {
+      "object": "Stairs003",
+      "end_level": 1950.0,
+      "expected": 1950
+    },
+    {
+      "object": "Stairs004",
+      "end_level": 3900.0,
+      "expected": 3900
+    },
+    {
+      "object": "Stairs005",
+      "end_level": 1950.0,
+      "expected": 1950
+    },
+    {
+      "object": "Stairs006",
+      "end_level": 3900.0,
+      "expected": 3900
+    },
+    {
+      "object": "Stairs007",
+      "end_level": 1950.0,
+      "expected": 1950
+    },
+    {
+      "object": "Stairs008",
+      "end_level": 3900.0,
+      "expected": 3900
+    }
+  ],
+  "slab_normals_fixed": [
+    "Structure130",
+    "Structure131",
+    "Structure132",
+    "Structure133",
+    "Structure134",
+    "Structure135",
+    "Structure136",
+    "Structure137",
+    "Structure138",
+    "Structure139",
+    "Structure140",
+    "Structure141",
+    "Structure142",
+    "Structure143",
+    "Structure144",
+    "Structure145"
+  ],
+  "column_grade_adjustments": [
+    "C003",
+    "C018",
+    "C039",
+    "C044",
+    "C124",
+    "C130"
+  ],
+  "expanded_parameter_test": "3900→4000: upper slab top=4000, return-flight end=4000; restored3900",
+  "provenance_note": "历史最终报告，经脱敏；此轮仅整理数据，未重新执行模型或验收。model_bbox 为历史显示范围，不作为全模型高程包络。"
+}

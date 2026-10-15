@@ -1,0 +1,21 @@
+{
+  "early_attempts": [
+    {
+      "attempt": "run01",
+      "result": "repair_needed",
+      "reason": "Native Arch Space has no Height property; use native room extrusion as space base",
+      "saved_checkpoints": [
+        "01_柱与全局参数",
+        "02_墙体与门窗洞口",
+        "03_地板与双跑楼梯"
+      ]
+    }
+  ],
+  "subsequent_repairs": [
+    "补齐弧形室外台阶；竖向参数为推定值。",
+    "显式统一楼板+Z法向，纠正顺时针轮廓向下拉伸。",
+    "核对板底3800/板顶3900及双跑楼梯终点标高。",
+    "参数3900→4000联动测试后恢复3900。"
+  ],
+  "source": "历史构建日志、执行明细和最终验收报告。"
+}

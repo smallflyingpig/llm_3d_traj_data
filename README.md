@@ -7,6 +7,7 @@
 | ID | 工具 | 任务 | 轨迹 |
 |---|---|---|---|
 | freecad-mounting-plate-001 | FreeCAD 1.1.4 | 80×50×5 mm 四孔安装板 | [build-trajectory.json](data/freecad/mounting-plate-001/build-trajectory.json) |
+| freecad-school-ground-floor-001 | FreeCAD 1.1.4 | 匿名首层建筑模型重建（63次调用，含修复与历史验收） | [build-trajectory.json](data/freecad/school-ground-floor-001/build-trajectory.json) |
 
 原始任务：“使用FreeCAD创建一个80×50×5 mm 长方体，并在四个角各打一个3 mm的圆柱刀具孔，保留合理的间距”。
 
@@ -42,3 +43,7 @@ python3 run_freecad.py accept_geometry.py -- /absolute/path/new-output-directory
 截图复现需可用图形桌面。`run_preview.py` 和 `render_preview.FCMacro` 是历史执行脚本；在独立副本目录中运行，已有 `render-result.json` 时启动脚本拒绝覆盖。截图脚本使用原本机 FreeCAD GUI 路径；在其他安装环境调整相应路径。它只关闭自己启动的 GUI 进程。图片生成后仍需实际查看，不能据渲染成功自动宣称视觉通过。
 
 精确尺寸以几何检查为准；视觉判断覆盖轮廓、孔布局、显示遮挡及画面裁切。原始聊天日志未入库。
+
+## 匿名建筑训练轨迹
+
+[首层建筑模型样本说明](data/freecad/school-ground-floor-001/README.md)：脱敏后的真实建模调用、执行明细、修复过程和历史最终验收；不含原始图纸、需求全文或模型二进制。局部几何尺寸保留，轨迹中标明省略和复现限制。可在样本目录执行 `python3 validate_sample.py` 检查文件完整性、调用配对和报告一致性。

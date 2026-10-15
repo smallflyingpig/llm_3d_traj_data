@@ -1,0 +1,20 @@
+{
+  "id": "freecad-school-ground-floor-001",
+  "task": "从首层CAD平面重建可编辑的建筑模型，使用立面和剖面核对高度，并记录构建过程。",
+  "scope": "首层详细模型；保留架空区，上层及地下仅作为核对参考。",
+  "source_inputs": "匿名首层DWG、相关立面/剖面、建筑需求说明；原始文件不公开。",
+  "units": "mm",
+  "evidence_parameters": {
+    "storey_height": 3900,
+    "slab_thickness": 100,
+    "window_sill": 900,
+    "window_height": 1600
+  },
+  "assumptions": {
+    "door_height": 2100,
+    "outdoor_terrace_rise": 320,
+    "outdoor_terrace_base": -1600
+  },
+  "acceptance": "原生可编辑对象、几何有效性、真实门窗洞口、参数联动、楼板和楼梯标高、保存重开、STEP回读。",
+  "excluded": "完整上层、结构计算与配筋、机电、施工图审查。"
+}
