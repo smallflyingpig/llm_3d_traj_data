@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2762,
+      "sha256": "e10e7cb7c584a6d8d7e3a9b9f715f2e0bbb6e89837cef16aaf206c48213d0984"
+    },
+    {
+      "path": "build-trajectory.json",
+      "bytes": 321721,
+      "sha256": "dbec49137e0cdd14615063b53800c9b2a5928fab32205f38bb08bf7ff1ddce77"
+    },
+    {
+      "path": "execution-details.jsonl",
+      "bytes": 308016,
+      "sha256": "8a1fa20d13fffa0351f5ad24b5631dbb335a9fb042d9f65c0b04a810940677d2"
+    },
+    {
+      "path": "model-build-history.jsonl",
+      "bytes": 2968,
+      "sha256": "6832a6ee9d9b7c92aff872050b9d6102cbc21b0a3babddb445f4e312a4e60d04"
+    },
+    {
+      "path": "privacy-report.json",
+      "bytes": 1007,
+      "sha256": "30a6db31d6b92273b8302bbf4f64240dad7d6e09636ebb212d729a22418f9b6d"
+    },
+    {
+      "path": "repair-history.json",
+      "bytes": 699,
+      "sha256": "87fb79abb580b60a772be0fd986d4a03f819fdf28b4d7513dafdc2514eaa9049"
+    },
+    {
+      "path": "sanitized-records.jsonl",
+      "bytes": 613811,
+      "sha256": "6000aeb24381021c4a3986f22a55f98fac83e16b5a8cda98d14214d55685f122"
+    },
+    {
+      "path": "task-spec.json",
+      "bytes": 875,
+      "sha256": "3c35d6db9dee2e1e0293b838b386df92935051cbd26e153d9900f442daf1f06f"
+    },
+    {
+      "path": "training.jsonl",
+      "bytes": 306257,
+      "sha256": "c7c05312943461c5cc9f5e00124c564e88c308d22263587097e3bb3be3a454cb"
+    },
+    {
+      "path": "trajectory.html",
+      "bytes": 802990,
+      "sha256": "2857e196b8551574edad6bdb8ddc75d5810f2bb994616e01314cba0cc3fbe0be"
+    },
+    {
+      "path": "validate_sample.py",
+      "bytes": 2181,
+      "sha256": "bec661fd7644e0287981ffb34ee185fa33428674932b58d317d7b6f269de9bf7"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 8062,
+      "sha256": "c2575aca91bc076e4858790b1be7765a42f3f71d8ef9b588e0e2f7e0915607ba"
+    }
+  ]
+}

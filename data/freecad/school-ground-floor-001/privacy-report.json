@@ -1,0 +1,43 @@
+{
+  "records": 229,
+  "messages": 140,
+  "tool_calls": 63,
+  "tool_results": 63,
+  "execution_details": 89,
+  "redactions": {
+    "home_paths": 0,
+    "temporary_paths": 177,
+    "emails": 0,
+    "credentials": 0,
+    "url_credentials": 0,
+    "phones": 1,
+    "timestamps": 36,
+    "named_identifiers": 374,
+    "global_coordinates": 1607,
+    "origin_fields": 2
+  },
+  "omitted_output_source_sequences": [
+    305,
+    306,
+    307,
+    309,
+    314,
+    323,
+    324
+  ],
+  "source_mapping_published": false,
+  "known_limitations": "未上传DWG、原始DOC、FCStd、STEP、预览或依赖；这是文本训练轨迹及历史验收证据，不是独立可运行的完整工程。",
+  "privacy_scan": {
+    "status": "passed",
+    "rules": [
+      "personal_home",
+      "original_identity",
+      "email",
+      "session_uuid",
+      "credential",
+      "inline_image",
+      "private_doc_id"
+    ],
+    "scope": "本样本目录全部待上传文本文件；未扫描仓库其他既有样本。"
+  }
+}

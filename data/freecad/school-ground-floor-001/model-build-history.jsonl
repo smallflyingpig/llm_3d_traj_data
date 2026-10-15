@@ -1,0 +1,18 @@
+{"stage": "00", "event": "开始重建", "scope": "首层详细模型；上层及地下仅作尺寸参考", "origin": [0, 0, 0], "input_sha256": "source_hash_0001"}
+{"stage": "01", "event": "保存阶段工程", "file": "/workspace/output/小学建筑模型/checkpoints/01_柱与全局参数.FCStd", "objects": 273}
+{"stage": "01", "event": "柱轮廓完成", "count": 130, "section_sizes": [[300.0, 800.0], [500.0, 800.0], [800.0, 300.0], [800.0, 500.0]]}
+{"stage": "02", "event": "墙体完成", "count": 87, "hidden_projected_lines_not_extruded": 78, "unpaired_short_jamb_lines": 105}
+{"stage": "02", "event": "保存阶段工程", "file": "/workspace/output/小学建筑模型/checkpoints/02_墙体与门窗洞口.FCStd", "objects": 543}
+{"stage": "02", "event": "门窗与真实洞口完成", "windows": 10, "doors": 14}
+{"stage": "03", "event": "地板及可切换上方楼板完成", "ground_slabs": 5, "upper_slabs": 4}
+{"stage": "03", "event": "保存阶段工程", "file": "/workspace/output/小学建筑模型/checkpoints/03_地板与双跑楼梯.FCStd", "objects": 601}
+{"stage": "04", "event": "功能分区与首层范围完成", "office_spaces": 7, "open_ground_floor_preserved": true}
+{"stage": "05", "event": "参数联动与几何校验通过", "invalid_solids": 0, "unconstrained_sketches": 0, "checked_openings": 24, "edit_test": "层高 3900→4000：柱顶增加100；恢复3900"}
+{"stage": "06", "event": "保存最终 FreeCAD 模型", "file": "/workspace/output/小学建筑模型/示例小学_首层可编辑模型.FCStd"}
+{"stage": "07", "event": "STEP 导出回读通过", "solids": 320, "volume_mm3": 678026034310.442}
+{"stage": "08", "event": "最终工程重开校验通过", "objects": 623, "native_proxies": "FreeCAD 原生 BIM/Draft；无自定义代理依赖"}
+{"stage": "09", "event": "完成轴测、真实俯视和 CAD 对照预览", "visible_model_bbox": [1092.2236, 785.2411, -1900.0, 90442.2236, 44235.0, 3800.0]}
+{"stage": "10", "event": "补齐三组弧形室外台阶与活动平台", "terrace_tiers": 15, "central_platform": 0, "vertical_terrace_dimensions": "推定且可编辑", "native_shapes_valid": true, "step_roundtrip": {"valid": true, "solid_count": 338, "relative_volume_error": 1.048489682189048e-14}}
+{"stage": "11", "event": "修正楼板法向并完成板顶/楼梯高程核对", "upper_slab_levels": [3800, 3900], "slab_count_checked": 9, "stair_flights_checked": 8, "central_platform": 600, "paving_column_base_assumptions": ["C003", "C018", "C039", "C044", "C124", "C130"], "parameter_edit_test": "3900→4000: upper slab top=4000, return-flight end=4000; restored3900"}
+{"stage": "09", "event": "完成轴测、真实俯视和 CAD 对照预览", "visible_model_bbox": [1092.2236, 785.2399999999998, -1750.0, 90442.2236, 44235.0, 3800.0]}
+{"stage": "09", "event": "完成轴测、真实俯视和 CAD 对照预览", "visible_model_bbox": [1092.2236, 785.2399999999998, -1750.0, 90442.2236, 44235.0, 3800.0]}
